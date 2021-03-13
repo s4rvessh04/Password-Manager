@@ -2,18 +2,19 @@ import os
 import csv
 import shutil
 from datetime import datetime
+from dotenv import load_dotenv
 from cryptography.fernet import Fernet
 from rich import print, console
 
-
+load_dotenv()
 """
 Use 'SECRET_KEY_MAIN = Fernet.generate_key()' only if you
 want some extra layer of security.
 NOTE: Once the key is generated you have to store it somewhere,
 else it changes everytime when program runs.
 """
-SECRET_KEY_MAIN = "mykey" 
-main = {SECRET_KEY_MAIN: b'FVNoyKbNoWsnoQt9jWN3rWxd_xYo8jKBAkOwbc00-8M='}
+SECRET_KEY_MAIN = str(os.getenv('USER_KEY'))
+main = {SECRET_KEY_MAIN: f'{str(os.getenv("ENCRYPTED_KEY"))}'.encode("utf-8")}
 SECRET_KEY = main[SECRET_KEY_MAIN]
 FERNET = Fernet(main[SECRET_KEY_MAIN])
 CIPHER_SUITE = FERNET
